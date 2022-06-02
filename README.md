@@ -3,3 +3,4 @@ Para instalar basta acessar dentro da IDE a aba > help > Eclipse marketplace > B
 
 Após isso, a IDE pedirá para reiniciar e na sequencia é possivel acessar os arquivos em modo "Design".
 
+Dentro do projeto, para acessar as telas, basta entrar na package "br.com.ecommercemotos.view" e selecionar a tela desejada.
