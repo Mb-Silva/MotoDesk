@@ -14,7 +14,8 @@ Descricao varchar(180)
 
 create table Produtos 
 (
-	IdProduto int auto_increment primary key not null,
+    IdProduto int auto_increment primary key not null,
+    NomeProduto varchar(30),
     Descricao varchar(100),
     Quantidade int,
     Valor decimal(8,2)

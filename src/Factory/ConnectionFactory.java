@@ -16,10 +16,10 @@ public class ConnectionFactory {
     private static final String USERNAME = "root";
 	
 	//Senha MySql
-	private static final String PASSWORD = "@1234";
+	private static final String PASSWORD = "segredo";
 	
 	//Caminho BD + Nome BD
-	private static final String DATABASE_URL = "jdbc:mysql://localhost:3307/ecommercemotos";
+	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/ecommercemotos";
 	
 	
 	//Conexão:
