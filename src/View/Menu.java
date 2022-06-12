@@ -11,12 +11,15 @@ package View;
 public class Menu extends javax.swing.JFrame {
     
     PesquisarCliente pesqCliente = new PesquisarCliente();
-
+    CatalogoDeProdutos catalogo = new CatalogoDeProdutos();
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+        
+        this.pack();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -78,6 +81,11 @@ public class Menu extends javax.swing.JFrame {
         btnMenuCadastros.add(jMenuItem1);
 
         jMenuItem2.setText("Cadastro Produtos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         btnMenuCadastros.add(jMenuItem2);
 
         jMenuBar1.add(btnMenuCadastros);
@@ -135,6 +143,12 @@ public class Menu extends javax.swing.JFrame {
         pesqCliente.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        catalogo.setVisible(true);
+                
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
