@@ -4,6 +4,10 @@
  */
 package View;
 
+import Controller.ClientesController;
+import Model.Clientes;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author INTEL
@@ -142,8 +146,22 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        menu.setVisible(true);
-        this.dispose();
+        ClientesController clienteController = new ClientesController();
+        
+        try{
+            boolean validacao = clienteController.Login(usuario.getText(), new String(senha.getPassword()));
+        
+            if(validacao){
+                menu.setVisible(true);
+                this.dispose();
+            } else{
+                JOptionPane.showMessageDialog(null, "Usuario ou Senha inválidos");
+            } 
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+        
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -172,11 +190,14 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                Login tela = new Login();
+                tela.setVisible(true);
+                tela.setLocationRelativeTo(null);
             }
         });
     }

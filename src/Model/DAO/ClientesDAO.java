@@ -52,7 +52,7 @@ public class ClientesDAO {
 				e.printStackTrace();
 			}
 		}
-	}
+    }
     
     public ArrayList<Clientes> getClientes(){
 		String sql = "SELECT * FROM Clientes";
@@ -105,16 +105,20 @@ public class ClientesDAO {
 		
 		return clientes;
 		
-	}
+    }
     
-    public ArrayList<Clientes> getClientesByName(String pesquisa){
-		String sql = "SELECT * FROM Clientes WHERE nome LIKE ?";
+    public ArrayList<Clientes> getClientesByName(String Pesquisa, String TpPesquisa){
+		String sql = "SELECT * FROM Clientes WHERE " + TpPesquisa + " LIKE ?";
+                if(TpPesquisa.equals("IdCliente")){
+                    sql = "SELECT * FROM Clientes WHERE " + TpPesquisa + " = ?";
+                }
 		
 		ArrayList<Clientes> clientes = new ArrayList<Clientes>();
 		
 		Connection conn = null;
 		ClientPreparedStatement pstm = null;
-		
+                
+
 		//Recupera os dados do BD
 		ResultSet rset = null;
 		
@@ -122,7 +126,14 @@ public class ClientesDAO {
 			conn = ConnectionFactory.createConnection();
 			pstm = (ClientPreparedStatement) conn.prepareStatement(sql);
 			
-			pstm.setString(1, pesquisa);
+                        pstm.setObject(1, TpPesquisa);
+                        if(TpPesquisa.equals("IdCliente")){
+                            Pesquisa = Pesquisa.replace("%", "");
+                            int PesquisaInt = Integer.parseInt(Pesquisa);
+                            pstm.setInt(1, PesquisaInt);
+                        } else {
+                            pstm.setString(1, Pesquisa);
+                        }
 			
 			rset = pstm.executeQuery();
 			
@@ -160,5 +171,210 @@ public class ClientesDAO {
 		
 		return clientes;
 		
-	}
+    }
+    
+    public Clientes getClientesById(int Id){
+		String sql = "SELECT * FROM Clientes WHERE IdCliente = ?";
+		
+		Clientes cliente = new Clientes();
+		Connection conn = null;
+		ClientPreparedStatement pstm = null;
+		
+		//Recupera os dados do BD
+		ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnection();
+			pstm = (ClientPreparedStatement) conn.prepareStatement(sql);
+			
+                        //Só deve retornar 1 registro pois a chave é unica
+                        pstm.setInt(1, Id);
+			rset = pstm.executeQuery();
+			
+			while(rset.next()) {
+                            cliente.setId(rset.getInt("IdCliente"));
+                            cliente.setNome(rset.getString("Nome"));
+                            cliente.setCPF(rset.getString("CPF"));
+                            cliente.setEmail(rset.getString("Email"));
+                            cliente.setUsuario(rset.getString("Usuario"));
+                            cliente.setTelefone(rset.getString("Telefone"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+				if(rset != null) {
+					rset.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return cliente;
+		
+    }
+    
+    public void delete(Clientes cliente) {
+		String sql = "DELETE FROM Clientes WHERE IdCliente = ?";
+		
+		Connection conn = null;
+		ClientPreparedStatement pstm = null;
+		
+		try {
+			conn = ConnectionFactory.createConnection();
+			pstm = (ClientPreparedStatement) conn.prepareStatement(sql);
+			
+			pstm.setInt(1, cliente.getId());
+			
+			pstm.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    }
+    
+    public boolean login(String user, String password){
+                boolean usuarioValido = false;
+        
+                String sql = "SELECT * FROM Clientes WHERE usuario = ? AND senha = ?";
+        
+                Connection conn = null;
+		ClientPreparedStatement pstm = null;
+                ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnection();
+			pstm = (ClientPreparedStatement) conn.prepareStatement(sql);
+			
+			pstm.setString(1, user);
+                        pstm.setString(2, password);
+			
+			rset = pstm.executeQuery();
+                        if(!rset.next()){
+                            usuarioValido = false;
+                        } else{
+                            usuarioValido = true;
+                        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+                
+                return usuarioValido;
+    }
+    
+    public boolean validaUsuario(String user){
+                boolean usuarioValido = false;
+        
+                String sql = "SELECT * FROM Clientes WHERE usuario = ?";
+        
+                Connection conn = null;
+		ClientPreparedStatement pstm = null;
+                ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnection();
+			pstm = (ClientPreparedStatement) conn.prepareStatement(sql);
+			
+			pstm.setString(1, user);
+			
+			rset = pstm.executeQuery();
+                        if(!rset.next()){
+                            usuarioValido = false;
+                        } else{
+                            usuarioValido = true;
+                        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+                
+                return usuarioValido;
+    }
+    
+    public boolean validaCPF(String cpf){
+                boolean cpfValido = false;
+        
+                String sql = "SELECT * FROM Clientes WHERE CPF = ?";
+        
+                Connection conn = null;
+		ClientPreparedStatement pstm = null;
+                ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnection();
+			pstm = (ClientPreparedStatement) conn.prepareStatement(sql);
+			
+			pstm.setString(1, cpf);
+			
+			rset = pstm.executeQuery();
+                        if(!rset.next()){
+                            cpfValido = false;
+                        } else{
+                            cpfValido = true;
+                        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+                
+                return cpfValido;
+    }
 }

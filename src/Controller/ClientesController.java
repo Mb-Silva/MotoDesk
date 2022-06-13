@@ -21,45 +21,89 @@ public class ClientesController {
         clienteDAO.save(cliente); 
     }
     
-    public ArrayList<Clientes> buscarTodosRegistros(){
-		ClientesDAO clienteDAO = new ClientesDAO();
+    public ArrayList<Clientes> BuscarTodosRegistros(){
+	ClientesDAO clienteDAO = new ClientesDAO();
                 ArrayList<Clientes> clientes = new ArrayList<Clientes>();
 		
-		for(Clientes c : clienteDAO.getClientes()) {
-                        Clientes cliente = new Clientes();
+        for(Clientes c : clienteDAO.getClientes()) {
+            Clientes cliente = new Clientes();
                     
-                        cliente.setId(c.getId());
-			cliente.setNome(c.getNome());
-			cliente.setCPF(c.getCPF());
-                        cliente.setEmail(c.getEmail());
-                        cliente.setUsuario(c.getUsuario());
-                        cliente.setTelefone(c.getTelefone());
+            cliente.setId(c.getId());
+            cliente.setNome(c.getNome());
+            cliente.setCPF(c.getCPF());
+            cliente.setEmail(c.getEmail());
+            cliente.setUsuario(c.getUsuario());
+            cliente.setTelefone(c.getTelefone());
 				
-			clientes.add(cliente);
-		} 
+            clientes.add(cliente);
+	} 
                 
-                return clientes;
+        return clientes;
     }
     
-    public ArrayList<Clientes> buscarRegistrosPeloNome(String pesquisa){
-		ClientesDAO clienteDAO = new ClientesDAO();
-                ArrayList<Clientes> clientes = new ArrayList<Clientes>();
+    public ArrayList<Clientes> BuscarRegistrosPeloNome(String pesquisa, String tpPesquisa){
+        ClientesDAO clienteDAO = new ClientesDAO();
+        ArrayList<Clientes> clientes = new ArrayList<Clientes>();
                 
-                pesquisa = "%" + pesquisa + "%";
                 
-		for(Clientes c : clienteDAO.getClientesByName(pesquisa)) {
-                        Clientes cliente = new Clientes();
+        //Tratamento das Strings de Pesquisa para a Busca
+        pesquisa = "%" + pesquisa + "%";
+        tpPesquisa = tpPesquisa.equals("Código") ? "IdCliente" : tpPesquisa;
+
+        for(Clientes c : clienteDAO.getClientesByName(pesquisa, tpPesquisa)) {
+            Clientes cliente = new Clientes();
                     
-                        cliente.setId(c.getId());
-			cliente.setNome(c.getNome());
-			cliente.setCPF(c.getCPF());
-                        cliente.setEmail(c.getEmail());
-                        cliente.setUsuario(c.getUsuario());
-                        cliente.setTelefone(c.getTelefone());
+            cliente.setId(c.getId());
+            cliente.setNome(c.getNome());
+            cliente.setCPF(c.getCPF());
+            cliente.setEmail(c.getEmail());
+            cliente.setUsuario(c.getUsuario());
+            cliente.setTelefone(c.getTelefone());
 				
-			clientes.add(cliente);
-		} 
+            clientes.add(cliente);
+        } 
                 
-                return clientes;
+        return clientes;
+    }
+    
+    public static Clientes BuscarRegistroPorId(int id){
+        ClientesDAO clienteDAO = new ClientesDAO();
+        
+        Clientes cliente = clienteDAO.getClientesById(id);
+                    	
+	return cliente;
+    }
+    
+    public static void Deletar(int id){
+        ClientesDAO clienteDAO = new ClientesDAO();
+        Clientes cliente = new Clientes();
+        
+        cliente = BuscarRegistroPorId(id);
+        
+        clienteDAO.delete(cliente); 
+    }
+    
+    public static boolean Login(String user, String password){
+        ClientesDAO clienteDAO = new ClientesDAO();
+        
+        boolean valido = clienteDAO.login(user, password);
+        
+        return valido;
+    }
+    
+    public static boolean VerificaUsuario(String user){
+        ClientesDAO clienteDAO = new ClientesDAO();
+        
+        boolean valido = clienteDAO.validaUsuario(user);
+        
+        return valido;
+    }
+    
+    public static boolean VerificaCPF(String cpf){
+        ClientesDAO clienteDAO = new ClientesDAO();
+        
+        boolean valido = clienteDAO.validaCPF(cpf);
+        
+        return valido;
     }
 }
