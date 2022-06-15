@@ -389,7 +389,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         cliente.setNome(this.nome.getText());
         cliente.setCPF(this.cpf.getText().replace(".", "").replace("-", ""));
         cliente.setUsuario(this.usuario.getText());
-        if(this.senha.getPassword() == this.confirmarSenha.getPassword()){
+        if(new String(this.senha.getPassword()).equals(new String(this.confirmarSenha.getPassword()))){
             cliente.setSenha(new String(this.senha.getPassword()));
             senhaValida = true;
         } else {
@@ -402,8 +402,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         CPFExiste = clienteController.VerificaCPF(this.cpf.getText().replace(".", "").replace("-", ""));
 
         
-        if(CPFExiste){
-            if(usuarioExiste){
+        if(!CPFExiste){
+            if(!usuarioExiste){
                 if(senhaValida){
                     try{
                         clienteController.Salvar(cliente);

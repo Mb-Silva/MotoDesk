@@ -3,8 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/INTEL/Documents/NetBeansProjects/MotoDesk/src/View/CadastroCliente.java</file>
-            <file>file:/C:/Users/INTEL/Documents/NetBeansProjects/MotoDesk/src/View/PesquisarCliente.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/Controller/MotoDesk.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/Model/DAO/ClientesDAO.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/View/Menu.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/View/Login.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/View/PesquisarCliente.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/Controller/ClientesController.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/View/CadastroProduto.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/View/CadastroCliente.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/Factory/ConnectionFactory.java</file>
+            <file>file:/C:/Users/INTEL/Documents/GitHub/EcommerceMotos/src/View/CatalogoDeProdutos.java</file>
         </group>
     </open-files>
 </project-private>
